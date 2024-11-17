@@ -5,6 +5,12 @@ git config --global user.email "usuario@dominio.com"
 
 git config --global --list : Para ver la informacion del usuario
 
+## Para agregar a repositorio remoto
+
+-git remote add url-del-repositorio-remoto
+-luego el git push origin master
+
+
 ## Clonar Repositorio
 
 git clone 'https://ruta-del-repositorio'
