@@ -134,7 +134,7 @@ cada vez que ese componente cambia o sale de la vista de usuario. Entonces el co
 -Este hook sirve para pasar datos entre varios componentes sin tener que pasar props de uno en uno.
 
 -Puedo crear un componente aparte para crear la funcion que va a iniciar el contexto. Este componente puede ser un simple archivo js.
-import { createContext } from 'react'children_props
+import { createContext } from 'react'
 const NombreFuncion = createContext(); Este nombre de funcion se recomienda iniciar con mayuscula.
 
 -En el app.jsx o en el archivo padre donde engloba a los distintos componentes que usaran el contexto, se debe llamar a la funcion antes creada y asignarle el provider y el valor que usaran los hijos. Todos los componentes que esten dentro del Provider son los que podran tener acceso a los datos que se envien.

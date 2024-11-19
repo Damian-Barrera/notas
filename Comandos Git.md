@@ -7,8 +7,9 @@ git config --global --list : Para ver la informacion del usuario
 
 ## Para agregar a repositorio remoto
 
--git remote add url-del-repositorio-remoto
--luego el git push origin master
+-git remote add origin url-del-repositorio-remoto
+-git push -u origin master
+
 
 
 ## Clonar Repositorio
