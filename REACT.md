@@ -52,7 +52,8 @@ return (
   <Route path='departamentos' element={<Departamentos />} > </Route>
   <Route path='empresa' element={<Empresa />} ></Route>
   <Route path='inicio' element={<Inicio />}></Route>
-  <Route path='/\*' element={<Navigate to='/' />} ></Route> //Esta es la linea que maneja las rutas que no coinciden con ninguna otra.
+  <Route path='/\*' element={<Navigate to='/' />} ></Route> //Esta es la linea que maneja las rutas que no coinciden con 
+  ninguna otra.
   </Routes>
 
 -Y en el menu de navegacion : import {NavLink, Link} from 'react-router-dom
@@ -63,22 +64,26 @@ Ejemplo:
 
    <Link to="http://www.google.com" > Google! </Link>
 
--Todas las rutas deben ser declaradas en Routes. Y este a la vez puede ser un componente aparte, para asi poder tener un mejor control y organizacion de las rutas.
+-Todas las rutas deben ser declaradas en Routes. Y este a la vez puede ser un componente aparte, para asi poder tener un mejor 
+control y organizacion de las rutas.
 
 ## Boton de volver atras
 
 -Importar el useNavigate de react-router-dom
--crear una funcion que contenga el useState: const navigate = useNAvigate()
--Crear una funcion manejadora del onClick cuyo contenido sera la funcion antes creada que tendra como parametro -1 . (Esto hace que la pagina regrese atras). (Estas dos funciones colocarlas dentro de la funcion del componente antes del return . )
+-crear una funcion que contenga el useState: const navigate = useNavigate()
+-Crear una funcion manejadora del onClick cuyo contenido sera la funcion antes creada que tendra como parametro -1 . (Esto hace 
+que la pagina regrese atras). (Estas dos funciones colocarlas dentro de la funcion del componente antes del return . )
 const handleBack = () => {navigate(-1) }
 -Luego llamar a la funcion que puede ser en un button, o icono, o lo que sea, con onClick
 <button onClick={handleBAck} > <button>
 
 ## Enviar informacion de hijos a padres:
 
- -Para que un componente hijo envíe datos a su padre, debe existir un componente padre que envuelva a los hijos que se van a comunicar. El flujo de información va del hijo al padre mediante funciones que el componente padre pasa como props a los hijos.
+ -Para que un componente hijo envíe datos a su padre, debe existir un componente padre que envuelva a los hijos que se van
+  a comunicar. El flujo de información va del hijo al padre mediante funciones que el componente padre pasa como props a los hijos.
 
--En el componente hijo, definimos una función interna que se encargará de invocar la función recibida desde el padre mediante props. Esta función se usa para enviar los datos hacia el padre.
+-En el componente hijo, definimos una función interna que se encargará de invocar la función recibida desde el padre mediante 
+props. Esta función se usa para enviar los datos hacia el padre.
 
 export const Hijo1 = ({enviandoInformacion }) => {
 
@@ -92,7 +97,9 @@ export const Hijo1 = ({enviandoInformacion }) => {
     )
 }
 
--En el componente padre, declaramos una función que recibirá los datos enviados por el hijo. Esta función se pasa como prop al hijo para que pueda ser invocada desde allí. El componente padre también puede compartir el estado actualizado con otros hijos mediante props.
+-En el componente padre, declaramos una función que recibirá los datos enviados por el hijo. Esta función se pasa como prop 
+al hijo para que pueda ser invocada desde allí. El componente padre también puede compartir el estado actualizado con otros 
+hijos mediante props.
 
 function App() {
 
@@ -121,23 +128,29 @@ useEffect( () => {
 Codigo que se ejecutara.
 }, Lista de dependencias )
 
--Si en las "Listas de dependencias " No hay nada. El codigo se ejecutara todas las veces que el componente al que pertenece el hook se renderize
+-Si en las "Listas de dependencias " No hay nada. El codigo se ejecutara todas las veces que el componente al que pertenece 
+el hook se renderize
 -Si se coloca un array vacio, [], El codigo se ejecutara solo una vez que sera cuando se renderiza el componente por primera vez .
 -Si se coloca en el array un valor, el codigo se ejecutara cada vez que en ese "valor" (o mas valores) se produzcan cambios.
 
--Se suele usar un return dentro del useEffect que sirve para ejecutar codigo en caso de que se desmonte el componente: Un componente se desmonta
-cada vez que ese componente cambia o sale de la vista de usuario. Entonces el codigo que hay dentro de return es el que se ejecutara. 
+-Se suele usar un return dentro del useEffect que sirve para ejecutar codigo en caso de que se desmonte el componente: Un 
+componente se desmonta
+cada vez que ese componente cambia o sale de la vista de usuario. Entonces el codigo que hay dentro de return es el que se 
+ejecutara. 
 
 
 ## useContext
 
 -Este hook sirve para pasar datos entre varios componentes sin tener que pasar props de uno en uno.
 
--Puedo crear un componente aparte para crear la funcion que va a iniciar el contexto. Este componente puede ser un simple archivo js.
+-Puedo crear un componente aparte para crear la funcion que va a iniciar el contexto. Este componente puede ser un simple
+archivo js.
 import { createContext } from 'react'
 const NombreFuncion = createContext(); Este nombre de funcion se recomienda iniciar con mayuscula.
 
--En el app.jsx o en el archivo padre donde engloba a los distintos componentes que usaran el contexto, se debe llamar a la funcion antes creada y asignarle el provider y el valor que usaran los hijos. Todos los componentes que esten dentro del Provider son los que podran tener acceso a los datos que se envien.
+-En el app.jsx o en el archivo padre donde engloba a los distintos componentes que usaran el contexto, se debe llamar a la
+ funcion antes creada y asignarle el provider y el valor que usaran los hijos. Todos los componentes que esten dentro del
+ Provider son los que podran tener acceso a los datos que se envien.
 
 import {NombreFuncion} from 'ruta_donde_esté'
 
@@ -171,12 +184,14 @@ Hola, yo soy el contexto: {variable} En caso de que sea un objeto : variable.dat
 )
 
 ## useRef
-
+-Este hook se usa para hacerreferencia a algun elemento html y manipularo sin esperar que se produzca un nuevo renderizado.
 -Importar el useRef de React.
--Crar la referencia en una variable:
+-Crear la referencia en una variable:
 const nombreReferencia = useRef();
 
--Luego en el elemento al que se le va a hacer la referencia colocar el atributo ref con el nombre de la referencia (que fue la que se creo en la variable que contiene al useRef() )
+-Luego en el elemento al que se le va a hacer la referencia colocar el atributo ref con el nombre de la referencia (que fue 
+la que se creo en la variable que contiene al useRef() )
+
 <input ref={nombreReferencia} placeholder='algun texto'>
 
 -Se debe crear la funcion que va a ejecutar el codigo deseado: Notar que el nombre de referencia se le debe agregar el "current".
@@ -202,9 +217,11 @@ function App() {
 
 ## useMemo
 
--Este hook se utiliza cuando hay una funcion que maneja datos "pesados" o precisa de mucho calculo evitando que se vuelvan a renderizar los mismo a menos que cambien agunos valores que se le van a indicar. Su sintaxis es similar a la del useEffect. 
+-Este hook se utiliza cuando hay una funcion que maneja datos "pesados" o precisa de mucho calculo evitando que se vuelvan 
+a renderizar los mismos a menos que cambien agunos valores que se le van a indicar. Su sintaxis es similar a la del useEffect. 
 
-- EL useMemo es una funcion que recibe un callback como parametro y un array que es quien va a indicar las dependencias que van a hacer que se ejecute el codigo.
+- EL useMemo es una funcion que recibe un callback como parametro y un array que es quien va a indicar las dependencias que 
+van a hacer que se ejecute el codigo.
 
 
     const nombreFuncion = useMeno( () => {
@@ -229,7 +246,7 @@ function App() {
       <h1>Contador: {contador}</h1>
       <button onClick={() => setContador(contador + 1)}>Incrementar</button>
 
-      <h2>Resultado: {resultadoLento}</h2>
+        <h2>Resultado: {resultadoLento}</h2>
       <button onClick={() => setValor(valor + 10)}>Actualizar valor</button>
     </div>
   );
@@ -254,7 +271,8 @@ import useReducer from 'react';
                       return state; // Siempre retornar un estado por defecto
               }
 
--Dentro del componente llamamos al hook, que destructurado va a tener el state y dispatch que es quien va a llamar a la action de la funcion reductora.
+-Dentro del componente llamamos al hook, que destructurado va a tener el state y dispatch que es quien va a llamar a la 
+action de la funcion reductora.
 -El hook tambien va a recibir dos argumentos. El primero es la funcionReductora y el segundo es el estado inicial. 
 Se recomienda crear una variable que va contener el estado incial.
 
@@ -300,7 +318,34 @@ Ejemplo :
 
 ## useParams 
 -Devuelve un objeto con los parametros que haya encontrado en la url   
+useParams es un hook de React Router que se utiliza para acceder a los parámetros dinámicos de la URL en una aplicación React. 
+Estos parámetros se definen en las rutas y permiten extraer valores específicos que forman parte del path.
 
+-Dentro del componente rutas deberia colocar algo asi para definir la ruta que llevara parametros:
+  <Route path ="/editar/:nombre/:id" element={<Editar/>} ></Route> Notar que hace uso de una / luego del nombre de componente
+  seguido de :nombreParametro 
+
+-El link tambien debe estar definido con los parametros correctos : 
+   <Link to= {`editar/${contacto.nombre}/${contacto.id}`} </Link>
+   o sin usar backticks: 
+   <Link to={"editar/" + contacto.nombre + "/" + contacto.id}>Editar Usuario</Link>
+
+-Y el componente que recibira y hara uso de los parametros debe importar el hook.
+  import { useParams } from "react-router-dom" 
+
+  const Editar = () => {
+
+    const { nombre, id } = useParams();
+
+    return (
+      <div> Este es el {nombre}
+            y este es el {id}
+       </div> 
+
+    )
+
+  }
+  Export default Editar
 
 ## Redux
 
@@ -361,7 +406,8 @@ const memo = useMemo( () => )
 -Luego en el componente que hara uso de ese estilo se debe importar colocandole un nombre a manera de identificarlo. 
   import miEstilo from '.ruta/del/archivo.css'
 
--En el elemento que hara uso de los estilos debo colocar el nombre que le asigne, entre llaves, mas el nombre que contiene el estilo.
+-En el elemento que hara uso de los estilos debo colocar el nombre que le asigne, entre llaves, mas el nombre que contiene el 
+estilo.
   <div className= >  {miEstilo.container} </div>
 
 -En caso de que la clase tenga guion ( - )  se debe colocar entre corchetes. 
