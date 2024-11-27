@@ -403,7 +403,7 @@ const memo = useMemo( () => )
 -Para hacerlo debo nombrar el archivo css con el sufijo module.
         estilos.module.css
 
--Luego en el componente que hara uso de ese estilo se debe importar colocandole un nombre a manera de identificarlo. 
+-Luego en el componente que hara uso de ese estilo se debe importar colocandole un nombre a manera de identificarlo. (Notar que la importacion no lleva llaves {} )
   import miEstilo from '.ruta/del/archivo.css'
 
 -En el elemento que hara uso de los estilos debo colocar el nombre que le asigne, entre llaves, mas el nombre que contiene el 

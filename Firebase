@@ -1,0 +1,8 @@
+## Comandos para usar firebase
+
+-addDoc(collectionRef, data)
+-getDoc(docRef)
+-getDocs(query)
+-onSnapshot(docRef, callback)
+-updateDoc(docRef, data)
+-deleteDoc(docRef)
