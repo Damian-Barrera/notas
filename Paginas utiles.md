@@ -17,4 +17,4 @@ Paginas para alojar JSON.
 -wegic.ia : Sitio que te crea una web a partir de intereactuar con una ia. 
  
 
- -https://publicapis.dev/  : Web donde figuran muchas apis publicas.
+-https://publicapis.dev/  : Web donde figuran muchas apis publicas.

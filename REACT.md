@@ -122,6 +122,17 @@ export default App
 # Hooks 
 ***************
 
+## useState
+
+const [ estado, setEstado ] = useState('') 
+
+-El set estado es el que modifica al estado. Y a la vez es el estado actual dentro del useState(''). El useState('') puede contener 
+un string, array u objeto tambien. useState([]). useState({}), useState('')
+
+-El set estado es una funcion : setEstado( codigo que modificara el estado )
+-Si al set se le pasa un callback que contiene un parametro, este parametro representaria al estado actual del useState . 
+  useEstad( (estadoActual) => modificar el estadoActual )
+
 ## useEffect
 
 useEffect( () => {
