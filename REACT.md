@@ -2,6 +2,16 @@
 -Luego de eso , entrar a la carpeta que se crea y alli instalar: npm install o npm i.
 -Para correr la aplicacion, npm run dev .
 -npm run build : Para empaquetar el proyecto y dejarlo listo para produccion.
+-React admite variables de entorno. Util para configuraciones especificas. 
+  *Se debe crear un archivo .env en el mismo nivel del package.json
+  *Las variables deben comenzar con el prefijo REACT_APP_ para que React las reconozca. 
+      Ejemplo:  REACT_APP_API_URL=https://api.ejemplo.com
+                REACT_APP_API_KEY=12345
+  *Para acceder a las variables se usa el procces.env seguido del nombre de la variable.
+      Ejemplo:  console.log(process.env.REACT_APP_API_URL); // https://api.ejemplo.com
+                console.log(process.env.REACT_APP_API_KEY); // 12345
+  *Si se modifican las variables de entorno hay que asegurarse de reiniciar el servidor de desarrollo para que los cambios se apliquen.   
+  Estas variables no quedan "ocultas" del todo, ya que son accesibles desde el navegador (cuando son utilizadas). No se recomienda cargar el archivo .env a github para evitar que otros puedan usar esas credenciales.
 
 ## PROPS
 
