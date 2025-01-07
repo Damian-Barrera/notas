@@ -22,41 +22,60 @@
 -Se debe importar la base de datos, db , que es la que se creo en el archivo js.
 -Tambien los modulos de firestore que van a ser usados: collection, getDocs, addDoc, deleteDoc,doc,getDoc, updateDoc. Cada uno se importara en el componente que vayan a ser usados.  
 
+
 ## Metodos de firestore:
 ** Recordar que los id en firestore se pueden crear de forma automatica.
 
--collection(baseDeDatos, 'nombreColleccion') : Recibe dos parametros. El nombre de la base de datos, que es la que esta definida en el archivo js y el otro parametro es el nombre de la coleccion 
+-collection(baseDeDatos, 'nombreColleccion') :Crea una referencia a una colección en la base de datos. Recibe dos parametros. El nombre de la base de datos, que es la que esta definida en el archivo js y el otro parametro es el nombre de la coleccion 
 
--getDocs(coleccionReferencia): Recibe un solo parametro, que es la referencia a la coleccion que se definio anteriormente. Esta coleccion trae como datos el nombre de la base de datos y el nombre de la coleccion.
+-getDocs(coleccionReferencia):Obtiene todos los documentos dentro de una colección. Recibe un solo parametro, que es la referencia a la coleccion que se definio anteriormente. Esta coleccion trae como datos el nombre de la base de datos y el nombre de la coleccion.
 
--doc(baseDatos,'coleccion','id'): Recibe tres parametros. El primero es la base de datos. El segundo es el nombre de la collecion y el tercero es el id del documento al que hacer referencia.
-
-
--getDoc(documentoReferencia): Recibe un parametro que es el resultado de doc que trae tres datos que eran base datos, coleccion y el id. 
-
--addDoc(collectionRef, {datos}) : Recibe dos parametros. El primero es la coleccion o la referencia a la coleccion. Y el segundo es un objeto con los datos que se quieren agegar a la coleccion.
+-doc(baseDatos,'coleccion','id'):Crea una referencia a un documento específico dentro de una colección. Recibe tres parametros. El primero es la base de datos. El segundo es el nombre de la collecion y el tercero es el id del documento al que hacer referencia.
 
 
--setDoc(documentoReferencia, {datos}) : Recibe dos parametros, El primero es el resultado de doc.Que me traia tres datos. y el segundo un objeto con los datos que quiero modificar. Si el documento ya existe lo sobrescribe y si no existe lo crea.
+-getDoc(documentoReferencia):Obtiene los datos de un documento específico. Recibe un parametro que es el resultado de doc que trae tres datos que eran base datos, coleccion y el id. 
 
--updateDoc(docRef, {data}): Recibe dos parametros, el primero es el documento al que hace refencia, que es el resultado de doc(). Y el segundo un objeto con los campos que quiero actualizar. Solo modifica los campos indicados. Este metodo es el que deberia usar en caso de querer agregar un campo a un documento. Ya que al agregar el campo no modifica los anteriores.
+-addDoc(collectionRef, {datos}) :Agrega un nuevo documento a una colección. Si el nombre de la coleccion que se le da, no la encuentra, entonces creara una con ese nombre junto con el documento que se le envia. El id lo genera de manera automatica.  Recibe dos parametros. El primero es la coleccion o la referencia a la coleccion. Y el segundo es un objeto con los datos que se quieren agegar a la coleccion.
 
--deleteDoc(docRef): Recibe un parametro que es el resultado de doc().
 
--onSnapshot(docRef, callback): Recibe dos parametros. El primero es el resultado de collection o doc. Permite escuchar cambios en tiempo real. Y el segundo es una función que se ejecuta cada vez que hay un cambio en la colección o documento.
+-setDoc(documentoReferencia, {datos}) :Establece (o sobrescribe) los datos de un documento.  Recibe dos parametros, El primero es el resultado de doc.Que me traia tres datos. y el segundo un objeto con los datos que quiero modificar. Si el documento ya existe lo sobrescribe y si no existe lo crea.
+
+-updateDoc(docRef, {data}):Actualiza los datos de un documento existente.  Recibe dos parametros, el primero es el documento al que hace refencia, que es el resultado de doc(). Y el segundo un objeto con los campos que quiero actualizar. Solo modifica los campos indicados. Este metodo es el que deberia usar en caso de querer agregar un campo a un documento. Ya que al agregar el campo no modifica los anteriores.
+
+-deleteDoc(docRef):Elimina un documento Recibe un parametro que es el resultado de doc().
+
+-onSnapshot(docRef, callback):Permite escuchar cambios en tiempo real. Recibe dos parametros. El primero es el resultado de collection o doc. Permite escuchar cambios en tiempo real. Y el segundo es una función que se ejecuta cada vez que hay un cambio en la colección o documento.
 Es util para mostrar cambios en tiempo real ya que la consulta a la base de datos se realiza mas rapido debido a que solo envia la informacion que se modifico y recibe como respuesta el o los datos modificados evitando asi que haya un trafico innecesario de datos.
 
 ****************************************************************************************.
 #### Firebase Authentication 
--Se deben importar en el archivo de configuracion getAuth y GoogleAuthProvider (para logearse con google) desde firebase/auth
+-Se deben importar en el archivo de configuracion getAuth y onAuthStateChanged y tambien GoogleAuthProvider (para logearse con google o el de facebbok,etc) desde firebase/auth
 
+-Los errores se pueden atrapara en el catch con error.code y de alli hacer algun tipo de validacion: 
+## Errores en el registro
+*Email invalido :  auth/invalid-email
+*Contraseña invalida (debe tener al menos 6 caracteres) : auth/weak-password 
+*Correo en uso : auth/email-already-in-use 
+*Para otro tipo de error se puede colocar en una validacion un error.code . Si hay algun error detectara el code y se atrapara en el catch tambien . 
+    if(error.code === 'auth/invalid-email'){
+        'email incorrecto'
+    }else if (error.code === 'auth/weak-password '){
+        'password demasiado corta'
+    }else {y asi con las demas validaciones}
 
+## Metodos de authentication
 -1. createUserWithEmailAndPassword( auth, email, password ) : Crea un nuevo usuario con correo electrónico y contraseña.
 
 Parámetros:
 auth: La instancia de autenticación.
 email: El correo electrónico del usuario.
 password: La contraseña del usuario.
+Esta funcion puede que sea mejor usarla en una variable llamada userCredential. Esta variable me devolvera el usuario con los datos que haya creado. A la vez de lo que me devuelve me serviria el user, (a esto guardarlo en una variable). Y de esa variable puede que me sirva el email o uid (uid para colocarlo en firestore) : 
+
+    Es decir :  const userCredential = createUserWithEmailAndPassword( auth, email, password )
+                const usuario = userCredential.user
+                usuario.uid
+                usuario.email   
 
  *Firebase maneja los errores de manera interna. Si coloco este metodo dentro de un try catch puedo hacer un console.log del error y alli me dira el tipo de error. Para hacerlo de manera mas especifica hacer el console.log de error.code y alli me dira el tipo  de error para luego poder tratarlo a travez de validaciones y asi lanzar alertas al usuario sobre el error. Algunos errores que se pueden cometer son : email ha sido registrado, o mal formato del email, contraseña demasido corta (debe tener al menos 6 caracteres) 
 
@@ -80,9 +99,17 @@ Parámetros:
 auth: La instancia de autenticación.
 callback: Función que se ejecuta cuando el estado de autenticación cambia.
 En el callback, que es una funcion asyncrona me devuelve el usuario si es que esta autenticado, sino me devuelve null.  
+    Ej:
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log("Usuario autenticado:", user);
+                console.log(user.uid)
+                setUsuario(true)
+            } else {
+                console.log("Usuario no autenticado");
+            }
 
-
--5. sendPasswordResetEmail(auth, email): Envía un correo electrónico para que el usuario restablezca su contraseña.
+-5. sendPasswordResetEmail(auth, email): Envía un correo electrónico para que el usuario restablezca su contraseña.          
 
 Parámetros:
 auth: La instancia de autenticación.
@@ -199,3 +226,12 @@ newEmail: El nuevo correo electrónico a verificar.
 Parámetros:
 user: El objeto del usuario actualmente autenticado.
 credential: Las credenciales adicionales para vincular.
+
+-21. sendEmailVerification(user) : Envia un correo electronico para verificar la cuenta. El parametro que recibe es el usuario que viene de : 
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user
+
+-22. emailVerified : Verifica si el usuario ha sido autenticado. Devuelve un valor booleano. No recibe parametro. Se puede colocar al inicio de sesion.
+            const userCredential = await signInWithEmailAndPassword(auth, email, password)
+            const usuario = userCredential.user
+            console.log(usuario.emaiVerified)
