@@ -85,7 +85,7 @@ Parámetros:
 auth: La instancia de autenticación.
 email: El correo electrónico del usuario.
 password: La contraseña del usuario.
-
+Esto me devuelve una promesa que contiene el objeto user
 
 -3. signOut(auth): Cierra la sesión del usuario actualmente autenticado.
 
@@ -235,3 +235,5 @@ credential: Las credenciales adicionales para vincular.
             const userCredential = await signInWithEmailAndPassword(auth, email, password)
             const usuario = userCredential.user
             console.log(usuario.emaiVerified)
+
+-23. serverTimestamp() : Guarda la fecha del servidor. No lleva parametro. Ej:  const fecha de creacion = serverTimestamp() o dentro de un objeto.           

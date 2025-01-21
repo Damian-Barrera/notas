@@ -10,6 +10,7 @@ git config --global --list : Para ver la informacion del usuario
 -git remote add origin url-del-repositorio-remoto
 -git push -u origin master
 
+-git rm --cached nombre_de_archivo : Sirve para eliminar un archivo que estaba siendo seguido por git. Si coloco un archivo en el gitignore dejara de rastrearlo pero si antes lo habia rastreado y agregado , seguira existiendo. Con este comando lo quitara tambien del arbol. 
 
 
 ## Clonar Repositorio

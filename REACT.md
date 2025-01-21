@@ -1,4 +1,5 @@
 -Para crear un proyeto se hace con npm create vite . Ir siguiendo las opciones.
+-Para crear el proyecto en la carpeta actual solo agregar un punto. (npm create vite .)
 -Luego de eso , entrar a la carpeta que se crea y alli instalar: npm install o npm i.
 -Para correr la aplicacion, npm run dev .
 -npm run build : Para empaquetar el proyecto y dejarlo listo para produccion.
@@ -12,6 +13,19 @@
                 console.log(process.env.REACT_APP_API_KEY); // 12345
   *Si se modifican las variables de entorno hay que asegurarse de reiniciar el servidor de desarrollo para que los cambios se apliquen.   
   Estas variables no quedan "ocultas" del todo, ya que son accesibles desde el navegador (cuando son utilizadas). No se recomienda cargar el archivo .env a github para evitar que otros puedan usar esas credenciales.
+
+## Tipos de exportaciones / importaciones
+
+-Hay dos maneras de exportar/importar moduos:
+  *Exportacin por defecto : export default nombreModulo
+  *Exportacion nombrada : export const nombreFuncion o export const funcion()
+
+-Cuando se usa export dafault, se importa sin llaves
+-Cuando se usa export const , se importa con llaves 
+
+* export default algo   ---->    import algo from './archivo'
+* export const funcion    ---->   import { algo } from './archivo.'
+
 
 ## PROPS
 
@@ -203,7 +217,38 @@ Ejemplo:
 return (
 Hola, yo soy el contexto: {variable} En caso de que sea un objeto : variable.dato1
 )
+***********************************************
+-Usando el metodo de children : 
+ -.Se crea el js en donde se creara el contexto: import {createContext} from 'react'
+                                                 Se importa la funcion: export const Micontexto = createContext();
 
+-Se creara el componente que recibira los datos y creara el provider: 
+        import { elContexto } from "./MyContext" Este es el archivo js
+ 
+ const Datos = ( {children} ) => { Este nombre de funcion es la que va a ir al app
+    
+    const datos = {
+        nombre: 'Damian',
+        ciudad: 'Cordoba',
+        edad : 37
+    }
+
+   return (
+     <MiContexto.Provider value={datos}>
+        {children}
+     </MiContexto.Provider>
+   )
+ }
+ 
+ export default Datos
+ - Luego en el app.jsx se cargara este componente, que afectara a todos los hijos :
+        <Datos>
+          <OtrosComponentes/>
+        <Datos/>
+ -Los componentes que necesiten usar el contexto deben usar el useContext:
+  const { nombre } = useContext(nombreContexto) Este es el que viene del js . 
+
+  
 ## useRef
 -Este hook se usa para hacerreferencia a algun elemento html y manipularo sin esperar que se produzca un nuevo renderizado.
 -Importar el useRef de React.
