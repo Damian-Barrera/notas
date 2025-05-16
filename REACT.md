@@ -5,6 +5,12 @@
 -npm run build : Para empaquetar el proyecto y dejarlo listo para produccion.
 -React admite variables de entorno. Util para configuraciones especificas. 
   *Se debe crear un archivo .env en el mismo nivel del package.json
+  # ¿Como acceder?
+  ## En vite: 
+  -El archivo de las variabes de entorno se debe nombrar .env . Dentro, la variable debe nombrarse usando el prefijo VITE_NOMBRE 
+  -Luego al ser llamadas en el archivo se pueden colocar dentro de una variable igualadas a : import.meta.env.VITE_NOMBRE_DE_VARIABLE
+
+## Con create react-app:
   *Las variables deben comenzar con el prefijo REACT_APP_ para que React las reconozca. 
       Ejemplo:  REACT_APP_API_URL=https://api.ejemplo.com
                 REACT_APP_API_KEY=12345
@@ -222,7 +228,8 @@ Hola, yo soy el contexto: {variable} En caso de que sea un objeto : variable.dat
  -.Se crea el js en donde se creara el contexto: import {createContext} from 'react'
                                                  Se importa la funcion: export const Micontexto = createContext();
 
--Se creara el componente que recibira los datos y creara el provider: 
+-Se creara el componente que recibira los datos y creara el provider. EL provider sera la funcion que tiene el contexto: 
+
         import { elContexto } from "./MyContext" Este es el archivo js
  
  const Datos = ( {children} ) => { Este nombre de funcion es la que va a ir al app
@@ -234,7 +241,7 @@ Hola, yo soy el contexto: {variable} En caso de que sea un objeto : variable.dat
     }
 
    return (
-     <MiContexto.Provider value={datos}>
+     <MiContexto.Provider value={datos}> 
         {children}
      </MiContexto.Provider>
    )
@@ -246,7 +253,7 @@ Hola, yo soy el contexto: {variable} En caso de que sea un objeto : variable.dat
           <OtrosComponentes/>
         <Datos/>
  -Los componentes que necesiten usar el contexto deben usar el useContext:
-  const { nombre } = useContext(nombreContexto) Este es el que viene del js . 
+  const { nombreDelDato } = useContext(nombreContexto) Este es el que viene del js . 
 
   
 ## useRef
@@ -255,8 +262,7 @@ Hola, yo soy el contexto: {variable} En caso de que sea un objeto : variable.dat
 -Crear la referencia en una variable:
 const nombreReferencia = useRef();
 
--Luego en el elemento al que se le va a hacer la referencia colocar el atributo ref con el nombre de la referencia (que fue 
-la que se creo en la variable que contiene al useRef() )
+-Luego en el elemento al que se le va a hacer la referencia colocar el atributo ref con el nombre de la referencia (que fue la que se creo en la variable que contiene al useRef() )
 
 <input ref={nombreReferencia} placeholder='algun texto'>
 
