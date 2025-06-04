@@ -5,9 +5,11 @@
    - Para crear un proyecto de Express, primero inicializa el proyecto con `npm init`:     npm init -y
     
    - Luego, instala Express:
-     
+      
      npm install express
      
+   - Recordar que se debe agregar en el package.json la entrada que indique que se va a utilizar ESM y no common js. Puede ser debajo de "main" colocar "type" : "module", 
+
 
 2. **Estructura Básica de un Servidor Express**
    - En el archivo principal de tu proyecto (por ejemplo, `app.js`), importa y configura Express:
@@ -28,11 +30,18 @@
 3. **Para correr la aplicación**
    - Ejecuta el servidor con el comando:
       node app.js
+
+
+## Variables de Entorno:
+
+* Para acceder a las variables de entorno : 
+    process.env.NOMBRE_DE_VARIABLE 
  
 ## Rutas
 
 1. **Definir Rutas Básicas**
    - Define rutas con el método correspondiente (`app.get()`, `app.post()`, etc.):
+    
       app.get('/ruta', (req, res) => {
        res.send('Respuesta a la ruta GET');
      });
