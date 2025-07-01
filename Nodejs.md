@@ -140,6 +140,12 @@ emisorProductos.emit('compra', 500);
     Elimina un listener.
 
 
-### Routing 
+ ### Otras librerias: 
 
+ -crypto : Sirve para poder generar id unicos . Esta de forma nativa en node y se la debe importar .
+ const crypto = import from 'crypto'
+ id = crypto.randomUUID()  //Esto me generara un id unico. 
+
+ 
+ 
     
