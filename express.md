@@ -35,14 +35,13 @@
 ## Variables de Entorno:
 
 - Para acceder a las variables de entorno :
-  process.env.NOMBRE_DE_VARIABLE  //NO OLVIDAR QUE LAS VARIABLES DE ENTORNO VAN EN MAYUSCULAS. 
+  process.env.NOMBRE_DE_VARIABLE //NO OLVIDAR QUE LAS VARIABLES DE ENTORNO VAN EN MAYUSCULAS.
 
 ## Rutas
 
 1. **Definir Rutas Básicas**
 
-    -app.use(express.static('.')); Este middleware es importante ya que ayuda a decirle a express cual es el inicio de la aplicacion. Si no se usa puede tener problemas a la hora de cargar archivos de css o imagenes u otros archivos js.
-
+   -app.use(express.static('.')); Este middleware es importante ya que ayuda a decirle a express cual es el inicio de la aplicacion. Si no se usa puede tener problemas a la hora de cargar archivos de css o imagenes u otros archivos js.
 
    - Define rutas con el método correspondiente (`app.get()`, `app.post()`, etc.):
 
@@ -82,7 +81,7 @@
 // Inicializamos Express:
 const app = express();
 
-// Definimos el Router (uno por grupo de rutas): 
+// Definimos el Router (uno por grupo de rutas):
 const miRouter = express.Router();
 
 // Asociamos el router a una ruta base:
@@ -216,8 +215,8 @@ res.send(`El parámetro recibido es: ${req.params.elParametro}`);
 ### Base de datos:
 
 -Se puede usar mysql instalando desde npm mysql2 .
--Luego desde el codigo importarla : 
-  import mysql from 'mysql2/promise' ; 
+-Luego desde el codigo importarla :
+import mysql from 'mysql2/promise' ;
 -Despues, crear la configuracion con los parametros de host, user,puerto, password y base de datos.
 
     const config = {
@@ -228,23 +227,29 @@ res.send(`El parámetro recibido es: ${req.params.elParametro}`);
       database : 'nombre_de_la_base_de_datos'
     }
 
-.Finalmente, hacemos la conexion pasando como parametro la variable, con los datos de la conexion.
-  const connection = await mysql.createConnection(config)
+-Finalmente, hacemos la conexion pasando como parametro la variable, con los datos de la conexion.
+const connection = await mysql.createConnection(config)
 
+- Para insertar datos a la base de datos :
+  const query = 'INSERT INTO usuarios (nombre, apellido, email) VALUES (?, ?, ?)';
+  //La manera mas segura de escapar caracteres especiales es usando los signos de interrogacion.
+  // Se deben haber creado las variables previamente o provenir de un formulario u otro lado.
+  const [resultado] = await connection.execute(query, [nombre, apellido, email]);
+  await connection.end();
 
 ### Formularios
 
--Para capturar datos de un formulario NO se debe enviar los datos en el action a un archivo html sino a una ruta del servidor. Por ejemplo no debo enviar a action="/misdatos.html" sino que debo haerlo a actio="/datos" . 
-
-
+-Para capturar datos de un formulario NO se debe enviar los datos en el action a un archivo html sino a una ruta del servidor. Por ejemplo no debo enviar a action="/misdatos.html" sino que debo haerlo a actio="/datos" .
 
 -Habilitar el middleware para leer datos POST:
-Express no puede leer los datos enviados en req.body si no usás el middleware correspondiente.
-Antes de definir las rutas debo agregar : 
-app.use(express.urlencoded({ extended: true }));
+Express no puede leer los datos enviados en req.body si no usás el middleware correspondiente que es :
+Debo declararlo antes de las rutas.  
+ app.use(express.urlencoded({ extended: true }))
 
 -La ruta que recibira los datos debe ser en POST . Ej:
 app.post('/datos', (req, res) => {
+Las variables que van a ser destructuradas son las que estan definidas en el name del input
+
     const { nombre, apellido, email } = req.body;
     console.log('Datos recibidos:', req.body); // para ver en consola
 
@@ -255,15 +260,56 @@ app.post('/datos', (req, res) => {
         <p>Email: ${email}</p>
         <a href="/">Volver</a>
     `);
+
 });
 
+-Para encriptar los datos se puede usar la libreria bcrypt.
+npm install bcrypt
+import bcrypt from 'bcrypt';
+
+--hash() genera el hash de la contraseña.
+--compare() compara el texto plano con el hash almacenado.
+--saltRounds determina cuán fuerte es la encriptación (10 está bien por defecto).
+
+
+const contraseñaPlano = 'mi_clave_segura';
+const saltRounds = 10;
+
+const hash = await bcrypt.hash(contraseñaPlano, saltRounds);
+console.log('Contraseña encriptada:', hash);
+
+\*\*Encriptar:
+const saltRounds = 10;
+
+const hash = await bcrypt.hash(contraseñaPlano, saltRounds);
+console.log('Contraseña encriptada:', hash);
+
+\*\* Para comparar :
+const coincide = await bcrypt.compare('mi_clave_segura', hash);
+
+if (coincide) {
+console.log('Contraseña correcta');
+} else {
+console.log('Contraseña incorrecta');
+}
+
+
+### Cargar Imagenes 
+-No olvidar que para poder trabajar desde rutas post debo usarl el middelware:  
+  app.use(express.urlencoded({ extended: true }))
+-El formulario debe usar enctype="multipart/form-data" . En caso de querer cargar varios archivos en el input file colocar el atributo multiple :
+    <input type="file" name="imagenes" multiple />
+
+
+-Para poder procesar imagenes se debe instalar multer. 
+(si quiero hacer pruebas enviando solo datos sin las imagenes y sin el multer, me dara error al leer los name del html si tengo colocado el enctype.)
 
 
 ### Para ver datos de una base de datos :
--Tener en cuenta que para ver datos de una base de datos una manera es creando una api y consultarla con fecth. Al igual que si quiero ver los datos ingresados desde un formulario no se puede hacer de manera directa a travez de un html. Se debe hacer devolviendo e html con el objeto res.send() y dentro escribir el html. Otra manera de manejar datos de manera dinamica es usando un motor de plantillas ya sea handlebar, pug , ejs ,etc. 
 
+-Tener en cuenta que para ver datos de una base de datos una manera es creando una api y consultarla con fecth. Al igual que si quiero ver los datos ingresados desde un formulario no se puede hacer de manera directa a travez de un html. Se debe hacer devolviendo e html con el objeto res.send() y dentro escribir el html. Otra manera de manejar datos de manera dinamica es usando un motor de plantillas ya sea handlebar, pug , ejs ,etc.
 
-
+https://github.com/Damian-Barrera/aprendiendo_express.git
 
 ## Resumen de Comandos Útiles
 

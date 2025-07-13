@@ -6,7 +6,7 @@ git config --global user.email "usuario@dominio.com"
 git config --global --list : Para ver la informacion del usuario
 
 ## Para agregar a repositorio remoto
-
+-Git no sube carpetas vacias !!! Las ignora . Puedo crear un archivo dentro de la carpeta para que asi git no la ignore y la agregue. 
 -git remote add origin url-del-repositorio-remoto
 -git push -u origin master
 
