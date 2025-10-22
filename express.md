@@ -49,9 +49,7 @@
      res.send('Respuesta a la ruta GET');
      });
 
-     ```
-
-     ```
+    
 
 2. **Rutas con Parámetros**
 
@@ -112,16 +110,12 @@ res.send(`El parámetro recibido es: ${req.params.elParametro}`);
 2. **Middleware de JSON**
 
    - Para manejar cuerpos de solicitud en formato JSON:
-     ```javascript
-     app.use(express.json());
-     ```
-
+      app.use(express.json());
+ 
 3. **Middleware Estático**
    - Para servir archivos estáticos (como imágenes, CSS, etc.):
-     ```javascript
-     app.use(express.static("public"));
-     ```
-
+      app.use(express.static("public"));
+ 
 ## Envío de Datos
 
 1. **Enviar Respuestas en JSON**
@@ -158,7 +152,18 @@ res.send(`El parámetro recibido es: ${req.params.elParametro}`);
    - Para capturar rutas no encontradas:
      ```javascript
      app.use((req, res) => {
-       res.status(404).send("Ruta no encontrada");
+       res.status(404).send("Ruta no encontrada");INSERT INTO usuarios (nombre, apellido, email, password, is_admin) VALUES
+('Juan', 'Pérez', 'juan@example.com', 'clave123', false),
+('María', 'Gómez', 'maria@example.com', 'clave456', false),
+('Luis', 'Martínez', 'luis@example.com', 'clave789', false),
+('Ana', 'Fernández', 'ana@example.com', 'clave321', false),
+('Carlos', 'López', 'carlos@example.com', 'clave654', false),
+('Lucía', 'Ramírez', 'lucia@example.com', 'clave987', false),
+('Pedro', 'Sánchez', 'pedro@example.com', 'clave147', false),
+('Sofía', 'Torres', 'sofia@example.com', 'clave258', false),
+('Diego', 'Ruiz', 'diego@example.com', 'clave369', false),
+('Valeria', 'Morales', 'valeria@example.com', 'clave159', false);
+
      });
      ```
 
@@ -239,7 +244,7 @@ const connection = await mysql.createConnection(config)
 
 ### Formularios
 
--Para capturar datos de un formulario NO se debe enviar los datos en el action a un archivo html sino a una ruta del servidor. Por ejemplo no debo enviar a action="/misdatos.html" sino que debo haerlo a actio="/datos" .
+-Para capturar datos de un formulario NO se debe enviar los datos en el action a un archivo html sino a una ruta del servidor. Por ejemplo no debo enviar a action="/misdatos.html" sino que debo hacerlo a action="/datos" .
 
 -Habilitar el middleware para leer datos POST:
 Express no puede leer los datos enviados en req.body si no usás el middleware correspondiente que es :
@@ -310,6 +315,84 @@ console.log('Contraseña incorrecta');
 -Tener en cuenta que para ver datos de una base de datos una manera es creando una api y consultarla con fecth. Al igual que si quiero ver los datos ingresados desde un formulario no se puede hacer de manera directa a travez de un html. Se debe hacer devolviendo e html con el objeto res.send() y dentro escribir el html. Otra manera de manejar datos de manera dinamica es usando un motor de plantillas ya sea handlebar, pug , ejs ,etc.
 
 https://github.com/Damian-Barrera/aprendiendo_express.git
+
+
+## Sessiones 
+Primero instalar dependencias : 
+npm install express-session
+
+
+Luego se hace la configuracion basica: 
+import session from "express-session";
+
+// Configuración de session
+app.use(session({
+  secret: "mi_clave_secreta", // clave para firmar la cookie
+  resave: false,              // no guardar sesión si no hay cambios
+  saveUninitialized: true,    // guardar sesiones nuevas aunque no tengan datos
+  rolling: true, //  renueva la expiración en cada request.Esto hace que la sesion se actualize mientras el usuario este activo.
+  cookie: { maxAge: 1000 * 60 * 60 } // duración de la cookie: 1 hora
+}));
+
+# Notas sobre la configuración:
+
+secret: se usa para firmar la cookie, debe mantenerse privada.
+
+resave: false para no escribir en el servidor si no hubo cambios.
+
+saveUninitialized: true permite crear sesiones vacías (útil para pruebas; en producción suele ponerse false).
+
+rolling: útil para extender la sesión si el usuario sigue activo.
+
+cookie.maxAge: define cuánto dura la sesión sin actividad.
+
+# Crear / guardar datos en la sesion
+// Después de un login exitoso
+req.session.user = {
+  id: 1,
+  nombre: "Damian",
+  is_admin: 1
+};
+user es un nombre elegido por uno mismo, podría llamarse de cualquier manera (req.session.usuario, req.session.auth, etc.).
+
+Todos los datos guardados en req.session persisten mientras dure la sesión.
+
+# Acceder a la sesión
+app.get("/dashboard", (req, res) => {
+  if (!req.session.user) {
+    return res.redirect("/"); // si no hay sesión, ir al login
+  }
+
+  console.log(req.session.user.nombre); // acceder a datos del usuario
+});
+
+# Destruir la sesión (logout)
+app.get("/logout", (req, res) => {
+  req.session.destroy(err => {
+    if (err) return res.send("Error al cerrar sesión");
+    res.redirect("/"); // vuelve al login
+  });
+});
+
+# Uso con HTML estático y fetch
+
+Si se quiere mostrar datos dinámicos en un HTML estático, lo más práctico es crear un endpoint API:
+
+app.get("/api/user", (req, res) => {
+  if (!req.session.user) return res.status(401).json({ error: "No autenticado" });
+  res.json(req.session.user);
+});
+
+** Y en el script que se vincula al html : 
+<script>
+fetch("/api/user")
+  .then(res => res.json())
+  .then(user => {
+    document.getElementById("nombreUsuario").textContent = user.nombre;
+  })
+  .catch(() => window.location.href = "/"); // redirige si no hay sesión
+</script>
+
 
 ## Resumen de Comandos Útiles
 

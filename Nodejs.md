@@ -2,6 +2,9 @@
 
 -Para no tener que estar reiniciando la aplicacion cada vez que haya cambios: node --watch nombre_archivo_de_inicio
 
+-cwd(): Current workin directory. Es la carpeta en donde se ha inicializado el proceso. Se puede usar comunmente con process.cwd() para indicar la ruta actual 
+
+
 ## Modulos Nativos
 
 -OS : Sirve para recibir informacion del sistema operativo
@@ -47,6 +50,14 @@ const os = require('node:os)
 
 
 -path : Sirve para construir rutas u obtener rutas.
+-fileUrlToPath: Esta funcion se debe importar del modulo url y sirve para obtener la ruta del archivo en donde se esta ejecutando dicha funcion. 
+    const __filename = fileUrlToPath(import.meta.url)
+
+-dirname : Funcion que recibe un argumento y devuelve la ruta del directorio. Se importa del modulo path 
+    const __dirname = dirname(__filename) ejemplo de arriba
+
+-join : Funcion que une rutas de archivos de forma segura, respetando los separadores según el sistema operativo.Se importa del modulo path    
+    join(__dirname, '../html/productos.html')
 
 -http: Modulo para crear el servidor . 
 
@@ -58,6 +69,8 @@ const os = require('node:os)
     servidor.listen(puertoEnDondeSeEjecuta, ()=> {
         mesanje que se enviara.
     })
+
+ 
 
 ## Metodos de http
 ✅ listen

@@ -9,6 +9,10 @@ Paginas para alojar JSON.
 -MockAPI
 -Firestore de Firebase
 
+-----------------------------
+Para alojar webs:
+https://seenode.com/
+
 
 -Railway : para guardar json ?
 
