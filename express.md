@@ -242,6 +242,37 @@ const connection = await mysql.createConnection(config)
   const [resultado] = await connection.execute(query, [nombre, apellido, email]);
   await connection.end();
 
+*** Uso del pool
+-El uso de pool se hace para evitar tener que abrir y cerrar la conexion a la bd por cada consulta realizada evitando asi el consumo excesivo de recursos. La apaertura y cierre se hace de manera automatica. Lo que hace es abrir hasta cierta cantidad de conexiones(previamente definidas en la configuracion) y si estan ocupadas la conexion entrante debe esperar a que se libere alguna. 
+
+          import mysql from "mysql2/promise";
+
+          // Creamos el pool de conexiones
+          const pool = mysql.createPool({
+            host: "localhost",
+            user: "root",        // tu usuario
+            password: "", // tu contraseña
+            database: "bd_pool",
+            waitForConnections: true, // espera si no hay conexiones disponibles
+            connectionLimit: 10, // máximo de conexiones simultáneas
+            queueLimit: 0 // sin límite de espera
+          });
+
+// Exportamos el pool para usarlo en otras partes
+export default pool;
+
+-Luego en el archivo en donde haremos las consultas debemos llamar al pool:
+import pool from 'ruta donde esta el archivo de configuracion'
+
+  const [result] = await pool.query( aqui la consulta a la DB )
+
+  En el array [result] vienen agunos datos importantes: 
+-affectedRows	  Saber si se modificó/eliminó alguna fila
+-insertId	      Obtener el id generado en un INSERT
+-changedRows	  Saber cuántas filas cambiaron realmente (UPDATE)
+-warningStatus	Detectar advertencias de MySQL
+
+
 ### Formularios
 
 -Para capturar datos de un formulario NO se debe enviar los datos en el action a un archivo html sino a una ruta del servidor. Por ejemplo no debo enviar a action="/misdatos.html" sino que debo hacerlo a action="/datos" .
@@ -383,7 +414,8 @@ app.get("/api/user", (req, res) => {
   res.json(req.session.user);
 });
 
-** Y en el script que se vincula al html : 
+** Y crear un script (js) vinculandolo al html : 
+
 <script>
 fetch("/api/user")
   .then(res => res.json())
@@ -392,7 +424,7 @@ fetch("/api/user")
   })
   .catch(() => window.location.href = "/"); // redirige si no hay sesión
 </script>
-
+*En los formularios de inicio de sesion, se debe capturar el evento submit, prevenir el eventDefault y hacer el fetch post, con los datos que debieron haber sido capturados del formulario, al endpoint definido en el index del backend.
 
 ## Resumen de Comandos Útiles
 
