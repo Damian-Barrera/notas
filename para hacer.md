@@ -7,5 +7,11 @@
  -Crear una pequeña interfaz en donde pueda elegir el tipo de letra que quiero usar. 
     *Deberia descargar algunas fuentes de letras o utilizar las que estan en el pc.
     *Asignarle con js o usando react los estilos cada vez que se presiona o elige el tipo de letra.
+_______________________________________
+Una web que agrupe los hoteles para promocionar. Es decir desde una web que se pueda elegir c/u y alli pueda ver precios , habitaciones, etc. 
+
+-Como cachear o que seria hacerlo. 
+-Como usar reddis. 
+
 
     

@@ -22,7 +22,7 @@
 
 ## Tipos de exportaciones / importaciones
 
--Hay dos maneras de exportar/importar moduos:
+-Hay dos maneras de exportar/importar modulos:
   *Exportacin por defecto : export default nombreModulo
   *Exportacion nombrada : export const nombreFuncion o export const funcion()
 
@@ -109,8 +109,7 @@ const handleBack = () => {navigate(-1) }
 
 ## Enviar informacion de hijos a padres:
 
- -Para que un componente hijo envíe datos a su padre, debe existir un componente padre que envuelva a los hijos que se van
-  a comunicar. El flujo de información va del hijo al padre mediante funciones que el componente padre pasa como props a los hijos.
+ -Para que un componente hijo envíe datos a su padre, debe existir un componente padre que envuelva a los hijos que se van a comunicar. El flujo de información va del hijo al padre mediante funciones que el componente padre pasa como props a los hijos.
 
 -En el componente hijo, definimos una función interna que se encargará de invocar la función recibida desde el padre mediante 
 props. Esta función se usa para enviar los datos hacia el padre.
@@ -127,9 +126,7 @@ export const Hijo1 = ({enviandoInformacion }) => {
     )
 }
 
--En el componente padre, declaramos una función que recibirá los datos enviados por el hijo. Esta función se pasa como prop 
-al hijo para que pueda ser invocada desde allí. El componente padre también puede compartir el estado actualizado con otros 
-hijos mediante props.
+-En el componente padre, declaramos una función que recibirá los datos enviados por el hijo. Esta función se pasa como prop al hijo para que pueda ser invocada desde allí. El componente padre también puede compartir el estado actualizado con otros hijos mediante props.
 
 function App() {
 
