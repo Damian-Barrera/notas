@@ -242,7 +242,7 @@ const connection = await mysql.createConnection(config)
   const [resultado] = await connection.execute(query, [nombre, apellido, email]);
   await connection.end();
 
-*** Uso del pool
+**Uso del pool**
 -El uso de pool se hace para evitar tener que abrir y cerrar la conexion a la bd por cada consulta realizada evitando asi el consumo excesivo de recursos. La apaertura y cierre se hace de manera automatica. Lo que hace es abrir hasta cierta cantidad de conexiones(previamente definidas en la configuracion) y si estan ocupadas la conexion entrante debe esperar a que se libere alguna. 
 
           import mysql from "mysql2/promise";
@@ -277,7 +277,7 @@ import pool from 'ruta donde esta el archivo de configuracion'
 
 -Para capturar datos de un formulario NO se debe enviar los datos en el action a un archivo html sino a una ruta del servidor. Por ejemplo no debo enviar a action="/misdatos.html" sino que debo hacerlo a action="/datos" .
 
--Habilitar el middleware para leer datos POST:
+-**Habilitar el middleware para leer datos POST:**
 Express no puede leer los datos enviados en req.body si no usás el middleware correspondiente que es :
 Debo declararlo antes de las rutas.  
  app.use(express.urlencoded({ extended: true }))

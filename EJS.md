@@ -21,6 +21,8 @@ Esto se usa cuando se quiere mostrar una variable en HTML.
 Esto no imprime nada, solo ejecuta código.
 ``` <% datos.forEach(usuario => { %> ```
 
+## Estilos css :
+
 -Para usar estilos css:
 Los archivos css deben estar en la carpeta public si o si . y dentro del index.js del backend debe estar declarado asi
 
@@ -37,5 +39,10 @@ Los archivos css deben estar en la carpeta public si o si . y dentro del index.j
 
 ```<p>
   <%= usuario.edad >= 18 ? "Mayor de edad" : "Menor de edad" %>
+</p>
+```
+*En caso de necesitar concatenar con otros datos ,el ternario debe ir entre parentesis.
+```<p>
+  <%= (usuario.edad >= 18 ? "Mayor de edad" : "Menor de edad") + " " + otra_variable %>
 </p>
 ```
